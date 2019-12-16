@@ -1,0 +1,50 @@
+This is the code corresponding to the master thesis of Reto Weber
+"Inaudible Audio Adversarial Perturbations using Psychoacoustic Clipping"
+Author: Reto Weber
+Supervisors: Kevin Roth, Yannic Kilcher, Prof. Dr. Thomas Hofmann
+
+This code is based on: https://github.com/carlini/audio_adversarial_examples
+
+To generate adversarial examples for your own files, follow the below process
+and modify the arguments to attack,py. Ensure that the file is sampled at
+16KHz and uses signed 16-bit ints as the data type. You may want to modify
+the number of iterations that the attack algorithm is allowed to run.
+
+Instructions:
+Please consider using Docker. If you cannot or do not want to use Docker you can execute the instructions from the Dockerfile step by step yourself.
+Docker instructions:
+
+cd docker
+    
+nvidia-docker build -t inaudibl_aae .
+    
+In the tmp folder are intermediate adversarial example stored.
+NVIDIA_VISIBLE_DEVICES defines the index of which GPU to use.
+    
+nvidia-docker run -it --rm  \
+    -v /PATH/TO/PROJECT/inaudible_aae/tmp:/tmp \
+    -v /PATH/TO/PROJECT/inaudible_aae:/home/inaudible_aae \
+    -e NVIDIA_VISIBLE_DEVICES=0 inaudible_aae /bin/bash
+    
+Only the first time execute:
+
+python3 make_checkpoint.py
+
+Generate adversarial attacks:
+
+python3 attack.py --lr 100 --in read_data.txt --regularizer 30 --iterations 5000 --windowsize 256
+
+Output will be in the same folder as the input.
+Input files and target phrases are defined in read_data.txt
+To get the prediction of DeepSpeech on any audio file:
+
+python3 classify.py audio.wav
+
+---
+
+WARNING: THE CODE TO HOOK INTO DEEPSPEECH IS UGLY. This means I require a
+very specific version of DeepSpeech (0.1.1) and TensorFlow (1.8.0) using
+python 3.5. I can't promise it won't set your computer on fire if you use
+any other versioning setup. (In particular, it WILL NOT work with
+DeepSpeech 0.2.0+, and WILL NOT work with TensorFlow 1.10+.)
+

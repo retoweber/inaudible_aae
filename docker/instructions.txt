@@ -1,0 +1,2 @@
+nvidia-docker build -t inaudible_aae .
+nvidia-docker run -it --rm -v /local/home/reweber/inaudible_aae/tmp:/tmp -v /local/home/reweber/inaudible_aae:/home/inaudible_aae -e NVIDIA_VISIBLE_DEVICES=0 inaudible_aae /bin/bash
