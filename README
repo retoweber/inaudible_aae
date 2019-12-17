@@ -3,6 +3,8 @@ This is the code corresponding to the master thesis of Reto Weber
 Author: Reto Weber
 Supervisors: Kevin Roth, Yannic Kilcher, Prof. Dr. Thomas Hofmann
 
+Pleas visit our homepage to listen to some generate adversarial examples: http://retoweber.info/ma.html
+
 This code is based on: https://github.com/carlini/audio_adversarial_examples
 
 To generate adversarial examples for your own files, follow the below process
